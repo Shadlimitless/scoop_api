@@ -1,4 +1,6 @@
 // database is let instead of const to allow us to modify it in test.js
+const yaml = require('js-yaml');
+const fs = require('fs');
 let database = {
   users: {},
   articles: {},
@@ -113,17 +115,11 @@ function deleteComment(url, request){
 function addVote(url, request){
   const commentId = url.split('/')[2];
   const username = request.body && request.body.username;
-  const comment = database.comments[commentId];
+  let comment = database.comments[commentId];
   const user = database.users[username];
   const response={};
   if(commentId && username && comment && user){
-    if(!comment.upvotedBy.includes(username)){
-      comment.upvotedBy.push(username);
-    }
-    if(comment.downvotedBy.includes(username)){
-      const idxToRemove = comment.downvotedBy.indexOf(username);
-      comment.downvotedBy.splice(idxToRemove, 1);
-    }
+    comment = upvote(comment, username);
     database.comments[commentId] = comment;
     response.body ={
       comment : comment
@@ -138,17 +134,11 @@ function addVote(url, request){
 function downVote(url, request){
   const commentId = url.split('/')[2];
   const username = request.body && request.body.username;
-  const comment = database.comments[commentId];
+  let comment = database.comments[commentId];
   const user = database.users[username];
   const response={};
   if(commentId && username && comment && user){
-    if(!comment.downvotedBy.includes(username)){
-      comment.downvotedBy.push(username);
-    }
-    if(comment.upvotedBy.includes(username)){
-      const idxToRemove = comment.upvotedBy.indexOf(username);
-      comment.upvotedBy.splice(idxToRemove, 1);
-    }
+    comment = downvote(comment, username);
     database.comments[commentId] = comment;
     response.body ={
       comment : comment
