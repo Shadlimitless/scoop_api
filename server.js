@@ -361,6 +361,23 @@ function downvote(item, username) {
   return item;
 }
 
+function loadDatabase(){
+  let data;
+  try{
+    let db = fs.readFileSync('./DB/db.yaml', 'utf-8');
+    data = yaml.safeLoad(db);
+  } catch(e){
+    console.error(`The following error occured when trying to load the DB ${e}`);
+  }
+  return data;
+}
+
+function saveDatabase(){
+  console.log(`Database to be saved ${JSON.stringify(database)}`);
+  let dataToSave = yaml.safeDump(database);
+  fs.writeFileSync('./DB/db.yaml', dataToSave, 'utf8');
+}
+
 // Write all code above this line.
 
 const http = require('http');

@@ -1,0 +1,34 @@
+users:
+  dssdds:
+    username: dssdds
+    articleIds:
+      - 1
+    commentIds: []
+  nbmnm:
+    username: nbmnm
+    articleIds: []
+    commentIds:
+      - 1
+articles:
+  '1':
+    id: 1
+    title: werwrerwe
+    url: ewrrew
+    username: dssdds
+    commentIds:
+      - 1
+    upvotedBy: []
+    downvotedBy: []
+    comments: []
+nextArticleId: 2
+comments:
+  '1':
+    body: fdgdg
+    username: nbmnm
+    articleId: 1
+    id: 1
+    upvotedBy:
+      - nbmnm
+      - dssdds
+    downvotedBy: []
+nextCommentId: 2
